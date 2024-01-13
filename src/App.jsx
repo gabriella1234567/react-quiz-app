@@ -32,7 +32,7 @@ const getRandomQuiz = async () => {
   try {
   const response = await axios.get('https://quizapi.io/api/v1/questions', {
     params: {
-      apiKey: api_key,
+      apiKey: `${api_key}`,
       limit: 10
     },
   })
