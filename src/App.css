@@ -1,0 +1,92 @@
+.main {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 1rem;
+}
+
+#start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.4rem;
+    margin: 1rem;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+}
+
+#start button {
+    width: 80%;
+}
+
+.categoryLabel {
+    display: block;
+    font-size: 1.5rem;
+}
+
+.selectCategory {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    padding: 0.6rem;
+    margin: 0.5rem;
+}
+
+select > option {
+    background: black;
+}
+
+select > option:focus {
+    background: red;
+}
+
+#questions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.4rem;
+    margin: 1rem;
+    width: 50%;
+    border-radius: 1rem;
+    gap: 1rem;
+}
+
+.card {
+    padding: 1.4rem;
+    margin: 1rem;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+}
+
+button#wrong {
+    border: 1px solid red;
+}
+
+button#correct {
+    border: 1px solid green;
+}
+
+.radio {
+    margin: 1rem;
+}
+
+.section {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.answer {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.4rem;
+    align-items: center; 
+}
+
+.answer button {
+    width: 100%;
+}

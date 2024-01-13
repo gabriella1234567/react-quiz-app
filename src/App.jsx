@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import './App.css'
 
 const api_key = import.meta.env.VITE_REACT_APP_API_TOKEN
 
@@ -9,7 +10,23 @@ function App() {
 const [difficulty, setDifficulty] = useState('easy')
 const [tag, setTag] = useState(undefined)
 const [questions, setQuestions] = useState([])
+const [currentQuestion, setCurrentQuestion] = useState(0)
+const [score, setScore] = useState(0)
+const [main, setMain] = useState(true)
   
+  const nextQuestion = () => {
+    if (currentQuestion === questions.length - 1) {
+      return
+    }
+  setCurrentQuestion(currentQuestion + 1)
+  }
+  
+  const previousQuestion = () => { 
+    if (currentQuestion === 0) {
+      return
+    }
+    setCurrentQuestion(currentQuestion - 1)
+  }
 
 const getRandomQuiz = async () => {
   try {
@@ -21,7 +38,9 @@ const getRandomQuiz = async () => {
   })
   if (response.data) {
     setQuestions(response.data)
-  }} catch (error) {
+    }
+  setMain(false)
+  } catch (error) {
     console.log('Error fetching random questions: ', error)
   }
 }
@@ -39,6 +58,7 @@ const getRandomQuiz = async () => {
       if (response.data) {
         setQuestions(response.data)
       }
+      setMain(false)
     } catch (error) { 
       console.log('Error fetching param questions: ', error)
     }
@@ -69,41 +89,77 @@ const getRandomQuiz = async () => {
 
   return (
     <>
-      <h1>Quizzzz</h1>
-      <div>
+      <div className="main">
+        {main && (
+          <div id="start">
+        <h1>Quizzz</h1>
         <p>You can start a completely random quiz or select difficulty and category</p>
         <button id="randomQuiz" onClick={getRandomQuiz}>Get Random Quiz</button>
         <form onSubmit={formSubmitHandler}>
-          <div>
-        <label htmlFor="category">Pick a category </label>
-        <select id="category" name="category" value={tag} onChange={(e) => setTag(e.target.value)}>
+          <div className="section">
+        <label id="categoryLabel" className="categoryLabel" htmlFor="category">Pick a category </label>
+        <select id="selectCategory" className="selectCategory "name="category" value={tag} onChange={(e) => setTag(e.target.value)}>
           <option value="HTML">HTML</option>
           <option value="BASH">BASH</option>
           <option value="Javascript">Javascript</option>
           <option value="PHP">PHP</option>
             </select>
           </div>
-          <div>
-          <label htmlFor="difficulty">Pick a difficulty</label>
-            <input type="radio" id="easy" name="difficulty" value="easy" checked={difficulty === 'easy'} onChange={(e) => setDifficulty(e.target.value)} />
+          <div className="section">
+          <label className="categoryLabel" htmlFor="difficulty">Pick a difficulty</label>
+                <input
+                  className="radio"
+                  type="radio"
+                  id="easy"
+                  name="difficulty"
+                  value="easy"
+                  checked={difficulty === 'easy'}
+                  onChange={(e) => setDifficulty(e.target.value)} />
             <label htmlFor="easy">Easy</label>
-            <input type="radio" id="medium" name="difficulty" value="medium" checked={difficulty === 'medium'} onChange={(e) => setDifficulty(e.target.value)} />
+                <input
+                  className="radio"
+                  type="radio"
+                  id="medium"
+                  name="difficulty"
+                  value="medium"
+                  checked={difficulty === 'medium'}
+                  onChange={(e) => setDifficulty(e.target.value)} />
             <label htmlFor="medium">Medium</label>
-            <input type="radio" id="hard" name="difficulty" value="hard" checked={difficulty === 'hard'} onChange={(e) => setDifficulty(e.target.value)} />
+                <input
+                  className="radio"
+                  type="radio"
+                  id="hard"
+                  name="difficulty"
+                  value="hard"
+                  checked={difficulty === 'hard'}
+                  onChange={(e) => setDifficulty(e.target.value)} />
             <label htmlFor="hard">Hard</label>
           </div>
           <button type="submit">Get Quiz</button>
         </form>
-      </div>
-      <div>
-        {questions.map((question, index) => (
-          <div key={index}>
-            <p>Question {index + 1}: {question.question}</p>
-          {renderAnswers(question)}
+          </div>)}
+      
+        <div id="questions">
+        {questions.length > 0 && (
+          <div className="card">
+            <p>Question {currentQuestion + 1}: {questions[currentQuestion].question}</p>
+              <div className="answer">
+                {renderAnswers(questions[currentQuestion])}
+              </div>
+              {currentQuestion > 0 && <button
+                className="prev"
+                onClick={previousQuestion}>Prev
+              </button>}
+              {currentQuestion < questions.length - 1 && <button
+                className="next"
+                onClick={nextQuestion}>Next
+              </button>}
           </div>
-        ))}
+        )}
       </div>
-    </>
+    </div>
+  </>
+
   )
 }
 
