@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import './App.css'
+import './output.css'
 
 const api_key = import.meta.env.VITE_REACT_APP_API_TOKEN
 
@@ -89,16 +89,24 @@ const getRandomQuiz = async () => {
 
   return (
     <>
-      <div className="main">
+      <div className='h-screen grid grid-rows-12 grid-cols-12 gap-1 bg-yellow-50'>
+        <header className="bg-amber-300 col-span-12 px-8 py-2">
+          <a href="" onClick={() => setMain(true)}><h1 className="text-4xl font-Neue">Quizzz</h1></a>
+        </header>
+      <div className="col-start-2 col-end-12 row-start-3 row-end-12 p-8 bg-white/50 text-center border-2 border-slate-800 rounded-lg">
         {main && (
-          <div id="start">
-        <h1>Quizzz</h1>
-        <p>You can start a completely random quiz or select difficulty and category</p>
-        <button id="randomQuiz" onClick={getRandomQuiz}>Get Random Quiz</button>
-        <form onSubmit={formSubmitHandler}>
+            <div id="start" className="flex flex-col items-center place-content-around h-full">
+              <h2 className="text-6xl font-Neue">Test your computer science skills</h2>
+        <p className="p-text">You can start a completely random quiz or select difficulty and category</p>
+              <button className="btn-main" id="randomQuiz" onClick={getRandomQuiz}>Get Random Quiz</button>
+              
+        <form onSubmit={formSubmitHandler} className="w-full">
           <div className="section">
-        <label id="categoryLabel" className="categoryLabel" htmlFor="category">Pick a category </label>
-        <select id="selectCategory" className="selectCategory "name="category" value={tag} onChange={(e) => setTag(e.target.value)}>
+        <label id="categoryLabel" className="p-text" htmlFor="category">Pick a category </label>
+                  <select id="selectCategory"
+                    className="selectCategory "
+                    name="category" value={tag}
+                    onChange={(e) => setTag(e.target.value)}>
           <option value="HTML">HTML</option>
           <option value="BASH">BASH</option>
           <option value="Javascript">Javascript</option>
@@ -106,7 +114,7 @@ const getRandomQuiz = async () => {
             </select>
           </div>
           <div className="section">
-          <label className="categoryLabel" htmlFor="difficulty">Pick a difficulty</label>
+          <label className="p-text" htmlFor="difficulty">Pick a difficulty</label>
                 <input
                   className="radio"
                   type="radio"
@@ -115,7 +123,7 @@ const getRandomQuiz = async () => {
                   value="easy"
                   checked={difficulty === 'easy'}
                   onChange={(e) => setDifficulty(e.target.value)} />
-            <label htmlFor="easy">Easy</label>
+            <label htmlFor="easy" className="p-text">Easy</label>
                 <input
                   className="radio"
                   type="radio"
@@ -135,7 +143,7 @@ const getRandomQuiz = async () => {
                   onChange={(e) => setDifficulty(e.target.value)} />
             <label htmlFor="hard">Hard</label>
           </div>
-          <button type="submit">Get Quiz</button>
+          <button className="btn-main w-full" type="submit">Get Quiz</button>
         </form>
           </div>)}
       
@@ -157,7 +165,7 @@ const getRandomQuiz = async () => {
           </div>
         )}
       </div>
-    </div>
+    </div></div>
   </>
 
   )
